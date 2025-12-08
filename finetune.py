@@ -113,7 +113,7 @@ base_model = model.layers[0]
 base_model.trainable = True
 
 # Exemplo: só deixar as últimas 20 camadas da EfficientNet treináveis
-for layer in base_model.layers[:-20]:
+for layer in base_model.layers[:-40]:
     layer.trainable = False
 
 print("Número de camadas na base:", len(base_model.layers))
