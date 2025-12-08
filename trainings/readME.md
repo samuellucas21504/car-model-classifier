@@ -54,7 +54,14 @@ model.compile(
 
 ## Versão 0.4
 
-Após organização dos resultados do treinamento, ficou decidio que
+Após organização dos resultados do treinamento, ficou decidido que
 a versão 0.1 teve melhor resultado na loss function e uma accuracy
-parecida com a versão 0.3, portanto foi feito um rollbackpara essa versão.
+parecida com a versão 0.3, portanto foi feito um rollback para essa versão.
 
+Nessa versão, foi alterado o número de camadas que serão descongeladas no finetune,
+de 20 foram aumentadas para 40 camadas.
+
+### Compare
+
+`Baseline  - acc teste: 0.6151`
+`Fine-tune - acc teste: 0.6878`
