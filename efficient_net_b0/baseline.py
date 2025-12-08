@@ -5,6 +5,7 @@ from tensorflow import keras
 from tensorflow.keras import layers, models
 from tensorflow.keras.applications import EfficientNetB0
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from training_config import save_history_to_csv
 
 import numpy as np
 
@@ -136,6 +137,7 @@ history = model.fit(
     class_weight=class_weight,  # <<< USANDO CLASS WEIGHT
     callbacks=[early_stop, checkpoint]
 )
+save_history_to_csv(history, stage="baseline")
 
 # Salvar o modelo baseline (após early stopping, já com os melhores pesos restaurados)
 model.save('models/EfficientNetB0/EfficientNetB0_baseline.keras')

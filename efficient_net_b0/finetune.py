@@ -3,6 +3,7 @@ from tensorflow.keras.applications.efficientnet import preprocess_input
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow import keras
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from training_config import save_history_to_csv
 
 import numpy as np
 
@@ -120,10 +121,11 @@ print("Camadas descongeladas (últimas 20):")
 for layer in base_model.layers[-20:]:
     print("  ", layer.name)
 
-# Recompilar com learning rate menor para fine-tuning
+loss_fn = tf.keras.losses.CategoricalCrossentropy(label_smoothing=0.1)
+
 model.compile(
     optimizer=tf.keras.optimizers.Adam(learning_rate=1e-5),
-    loss="categorical_crossentropy",
+    loss=loss_fn,
     metrics=["accuracy"],
 )
 
@@ -146,6 +148,7 @@ history_ft = model.fit(
     class_weight=class_weight,  # <<< mantém o balanceamento também no fine-tuning
     callbacks=[early_stop_ft, checkpoint_ft],
 )
+save_history_to_csv(history_ft, stage="finetune")
 
 # Salvar o último modelo fine-tunado (com os melhores pesos restaurados do early stopping)
 model.save("models/EfficientNetB0/EfficientNetB0_finetuned_last.keras")
