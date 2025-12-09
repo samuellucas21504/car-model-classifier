@@ -121,11 +121,10 @@ print("Camadas descongeladas (últimas 20):")
 for layer in base_model.layers[-20:]:
     print("  ", layer.name)
 
-loss_fn = tf.keras.losses.CategoricalCrossentropy(label_smoothing=0.1)
 
 model.compile(
-    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-5),
-    loss=loss_fn,
+    optimizer=tf.keras.optimizers.Adam(learning_rate=3e-6),
+    loss="categorical_crossentropy",
     metrics=["accuracy"],
 )
 

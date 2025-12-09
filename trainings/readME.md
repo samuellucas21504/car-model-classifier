@@ -55,8 +55,7 @@ model.compile(
 ## Versão 0.4
 
 Após organização dos resultados do treinamento, ficou decidido que
-a versão 0.1 teve melhor resultado na loss function e uma accuracy
-parecida com a versão 0.3, portanto foi feito um rollback para essa versão.
+os pesos de 0.1 obtiveram melhor resultado, portanto houve um rollback dos pesos nessa etapa.
 
 Nessa versão, foi alterado o número de camadas que serão descongeladas no finetune,
 de 20 foram aumentadas para 40 camadas.
@@ -65,3 +64,17 @@ de 20 foram aumentadas para 40 camadas.
 
 `Baseline  - acc teste: 0.6151`
 `Fine-tune - acc teste: 0.6878`
+
+
+## Versão 0.5
+
+Nessa versão foi alterado o learning rate do finetune de 1e-5 para 5e-5, além disso foi
+feito o rollback do label_smoothing, a loss function usada agora é [categorical_crossentropy](https://www.geeksforgeeks.org/deep-learning/categorical-cross-entropy-in-multi-class-classification/). 
+
+Começar com um learning rate menor fez com que o modelo após o fine tune convergisse em um
+val_acc menor, quase igual ao val_acc do baseline.
+
+### Compare
+`Baseline  - acc teste: 0.6151`
+`Fine-tune - acc teste: 0.6199`
+
