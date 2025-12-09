@@ -9,7 +9,7 @@ import numpy as np
 train_dir = "dataset/train"
 test_dir  = "dataset/test"
 
-IMG_HEIGHT, IMG_WIDTH = 224, 224
+IMG_HEIGHT, IMG_WIDTH = 240, 240
 BATCH_SIZE = 32
 
 test_datagen = ImageDataGenerator(
@@ -23,7 +23,7 @@ test_generator = test_datagen.flow_from_directory(
     shuffle=False
 )
 
-baseline = keras.models.load_model("models/EfficientNetB0/EfficientNetB0_baseline.keras")
+baseline = keras.models.load_model("models/EfficientNetB1/EfficientNetB1_baseline.keras")
 
 baseline.compile(
     optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
@@ -36,7 +36,7 @@ baseline_loss, baseline_acc = baseline.evaluate(test_generator)
 print(f"Baseline - loss: {baseline_loss:.4f} - acc: {baseline_acc:.4f}")
 
 print("\nRecarregando melhor modelo fine-tunado para avaliação...")
-ft_best = keras.models.load_model("models/EfficientNetB0/EfficientNetB0_finetuned_best.keras")
+ft_best = keras.models.load_model("models/EfficientNetB1/EfficientNetB1_finetuned_best.keras")
 
 ft_best.compile(
     optimizer=tf.keras.optimizers.Adam(learning_rate=1e-5),

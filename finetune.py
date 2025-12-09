@@ -14,7 +14,7 @@ train_dir = "dataset/train"
 test_dir  = "dataset/test"
 
 # Parâmetros
-IMG_HEIGHT, IMG_WIDTH = 224, 224
+IMG_HEIGHT, IMG_WIDTH = 240, 240
 BATCH_SIZE = 32
 
 # Gerador de dados de treinamento com augmentação e separação de validação
@@ -87,7 +87,7 @@ print("Pesos por classe:", class_weight)
 # =========================================
 # CARREGAR MODELO BASELINE E AVALIAR
 # =========================================
-baseline = keras.models.load_model("models/EfficientNetB0/EfficientNetB0_baseline.keras")
+baseline = keras.models.load_model("models/EfficientNetB1/EfficientNetB1_baseline.keras")
 
 # Garantir que está compilado antes de avaliar
 baseline.compile(
@@ -106,7 +106,7 @@ print(f"Baseline - loss: {baseline_loss:.4f} - acc: {baseline_acc:.4f}")
 # Vamos fine-tunar o mesmo modelo 'baseline'
 model = baseline
 
-# Pegar a EfficientNetB0 dentro do Sequential (primeira layer)
+# Pegar a EfficientNetB1 dentro do Sequential (primeira layer)
 base_model = model.layers[0]
 
 # Descongelar a base inteira, depois re-congelar as camadas iniciais
@@ -141,7 +141,7 @@ reduce_lr = ReduceLROnPlateau(
 )
 
 checkpoint_ft = ModelCheckpoint(
-    "models/EfficientNetB0/EfficientNetB0_finetuned_best.keras",
+    "models/EfficientNetB1/EfficientNetB1_finetuned_best.keras",
     monitor="val_loss",
     save_best_only=True,
 )
@@ -156,4 +156,4 @@ history_ft = model.fit(
 save_history_to_csv(history_ft, stage="finetune")
 
 # Salvar o último modelo fine-tunado (com os melhores pesos restaurados do early stopping)
-model.save("models/EfficientNetB0/EfficientNetB0_finetuned_last.keras")
+model.save("models/EfficientNetB1/EfficientNetB1_finetuned_last.keras")

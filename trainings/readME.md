@@ -101,3 +101,14 @@ ao aplicar essa mudança de LR.
 ### Compare
 `Baseline  - acc teste: 0.6153`
 `Fine-tune - acc teste: 0.6982`
+
+## Versão 0.7
+
+Essa versão alterou o modelo base de EfficientNetB0 para EfficientNetB1.
+
+Nota-se uma melhora no valor final do fine-tune, sendo esse
+o primeiro treinamento que superou a marca de 70% de acurácia no teste.
+
+### Compare
+`Baseline  - acc teste: 0.6160`
+`Fine-tune - acc teste: 0.7181`

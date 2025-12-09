@@ -3,7 +3,7 @@ from tensorflow.keras.applications.efficientnet import preprocess_input
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow import keras
 from tensorflow.keras import layers, models
-from tensorflow.keras.applications import EfficientNetB0
+from tensorflow.keras.applications import EfficientNetB1
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from training_config import save_history_to_csv
 
@@ -16,7 +16,7 @@ train_dir = "dataset/train"
 test_dir  = "dataset/test"
 
 # Parâmetros
-IMG_HEIGHT, IMG_WIDTH = 224, 224
+IMG_HEIGHT, IMG_WIDTH = 240, 240
 BATCH_SIZE = 32
 
 # Gerador de dados de treinamento com augmentação e separação de validação
@@ -90,8 +90,8 @@ for cls_idx in range(num_classes):
 print("Contagem por classe:", class_counts)
 print("Pesos por classe:", class_weight)
 
-# Carregar base pré-treinada (EfficientNetB0) sem a top layer
-base_model = EfficientNetB0(
+# Carregar base pré-treinada (EfficientNetB1) sem a top layer
+base_model = EfficientNetB1(
     weights='imagenet',
     include_top=False,
     input_shape=(IMG_HEIGHT, IMG_WIDTH, 3)
@@ -124,7 +124,7 @@ early_stop = EarlyStopping(
 )
 
 checkpoint = ModelCheckpoint(
-    'models/EfficientNetB0/EfficientNetB0_baseline_best.keras',
+    'models/EfficientNetB1/EfficientNetB1_baseline_best.keras',
     monitor='val_accuracy',
     save_best_only=True
 )
@@ -140,7 +140,7 @@ history = model.fit(
 save_history_to_csv(history, stage="baseline")
 
 # Salvar o modelo baseline (após early stopping, já com os melhores pesos restaurados)
-model.save('models/EfficientNetB0/EfficientNetB0_baseline.keras')
+model.save('models/EfficientNetB1/EfficientNetB1_baseline.keras')
 
 # (Opcional) Avaliação rápida no conjunto de teste
 print("Avaliação baseline no conjunto de teste:")
