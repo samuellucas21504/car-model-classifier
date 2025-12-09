@@ -1,7 +1,7 @@
 from pathlib import Path
 import csv
 
-VERSION = "0.5"
+VERSION = "0.6"
 
 TRAININGS_ROOT = Path("trainings")
 

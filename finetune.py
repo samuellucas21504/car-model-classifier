@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.keras.applications.efficientnet import preprocess_input
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow import keras
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from training_config import save_history_to_csv
 
 import numpy as np
@@ -117,13 +117,12 @@ for layer in base_model.layers[:-40]:
     layer.trainable = False
 
 print("Número de camadas na base:", len(base_model.layers))
-print("Camadas descongeladas (últimas 20):")
-for layer in base_model.layers[-20:]:
+print("Camadas descongeladas (últimas 40):")
+for layer in base_model.layers[-40:]:
     print("  ", layer.name)
 
-
 model.compile(
-    optimizer=tf.keras.optimizers.Adam(learning_rate=3e-6),
+    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-5),
     loss="categorical_crossentropy",
     metrics=["accuracy"],
 )
@@ -132,6 +131,13 @@ early_stop_ft = EarlyStopping(
     monitor="val_loss",
     patience=5,
     restore_best_weights=True,
+)
+
+reduce_lr = ReduceLROnPlateau(
+    monitor="val_loss",
+    factor=0.3,
+    patience=2,
+    min_lr=1e-5,
 )
 
 checkpoint_ft = ModelCheckpoint(
@@ -145,7 +151,7 @@ history_ft = model.fit(
     epochs=20,
     validation_data=val_generator,
     class_weight=class_weight,  # <<< mantém o balanceamento também no fine-tuning
-    callbacks=[early_stop_ft, checkpoint_ft],
+    callbacks=[early_stop_ft, checkpoint_ft, reduce_lr],
 )
 save_history_to_csv(history_ft, stage="finetune")
 

@@ -60,6 +60,8 @@ os pesos de 0.1 obtiveram melhor resultado, portanto houve um rollback dos pesos
 Nessa versão, foi alterado o número de camadas que serão descongeladas no finetune,
 de 20 foram aumentadas para 40 camadas.
 
+Notou-se uma pequena melhora no val accuracy do teste, portanto essa alteração foi mantida.
+
 ### Compare
 
 `Baseline  - acc teste: 0.6151`
@@ -78,3 +80,24 @@ val_acc menor, quase igual ao val_acc do baseline.
 `Baseline  - acc teste: 0.6151`
 `Fine-tune - acc teste: 0.6199`
 
+## Versão 0.6
+
+Como demonstrado em 0.5, um learning rate menor fez com que o modelo tivesse um acc
+parecido com o val_acc do baseline. Portanto, nessa versão subimos o lr para 1e-5
+e adicionamos ReduceLROnPlateau com os seguintes parâmetros:
+
+```py
+    monitor="val_loss",
+    factor=0.3,
+    patience=2,
+    min_lr=1e-7,
+```
+
+Quando o modelo trava numa loss, ele diminui o LR sozinho, o que costuma melhorar fine-tuning em datasets pequenos.
+
+Nota-se uma pequena melhora no val_acc do fine-tune 
+ao aplicar essa mudança de LR.
+
+### Compare
+`Baseline  - acc teste: 0.6153`
+`Fine-tune - acc teste: 0.6982`
