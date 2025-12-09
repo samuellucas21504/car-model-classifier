@@ -112,3 +112,12 @@ o primeiro treinamento que superou a marca de 70% de acurácia no teste.
 ### Compare
 `Baseline  - acc teste: 0.6160`
 `Fine-tune - acc teste: 0.7181`
+
+## Versäo 0.8
+
+Nessa versão foi duplicado o número de épocas para 40 e reduzido o batch size pela metade, para 16.
+Isso fez com que o tempo de processamento aumentasse em 4x, mas o modelo obteve uma melhora significativa no val_acc.
+
+### Compare
+`Baseline  - acc teste: 0.6328`
+`Fine-tune - acc teste: 0.7687`

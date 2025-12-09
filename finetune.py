@@ -15,7 +15,8 @@ test_dir  = "dataset/test"
 
 # Parâmetros
 IMG_HEIGHT, IMG_WIDTH = 240, 240
-BATCH_SIZE = 32
+EPOCHS = 40
+BATCH_SIZE = 16
 
 # Gerador de dados de treinamento com augmentação e separação de validação
 train_datagen = ImageDataGenerator(
@@ -148,7 +149,7 @@ checkpoint_ft = ModelCheckpoint(
 
 history_ft = model.fit(
     train_generator,
-    epochs=20,
+    epochs=EPOCHS,
     validation_data=val_generator,
     class_weight=class_weight,  # <<< mantém o balanceamento também no fine-tuning
     callbacks=[early_stop_ft, checkpoint_ft, reduce_lr],

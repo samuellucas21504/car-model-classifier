@@ -4,7 +4,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow import keras
 from tensorflow.keras import layers, models
 from tensorflow.keras.applications import EfficientNetB1
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from training_config import save_history_to_csv
 
 import numpy as np
@@ -17,7 +17,8 @@ test_dir  = "dataset/test"
 
 # Parâmetros
 IMG_HEIGHT, IMG_WIDTH = 240, 240
-BATCH_SIZE = 32
+EPOCHS = 40
+BATCH_SIZE = 16
 
 # Gerador de dados de treinamento com augmentação e separação de validação
 train_datagen = ImageDataGenerator(
@@ -123,6 +124,13 @@ early_stop = EarlyStopping(
     restore_best_weights=True
 )
 
+reduce_lr = ReduceLROnPlateau(
+    monitor="val_loss",
+    factor=0.3,
+    patience=2,
+    min_lr=1e-3,
+)
+
 checkpoint = ModelCheckpoint(
     'models/EfficientNetB1/EfficientNetB1_baseline_best.keras',
     monitor='val_accuracy',
@@ -132,10 +140,10 @@ checkpoint = ModelCheckpoint(
 # Treinamento inicial (somente camadas do topo treináveis)
 history = model.fit(
     train_generator,
-    epochs=20,
+    epochs=EPOCHS,
     validation_data=val_generator,
-    class_weight=class_weight,  # <<< USANDO CLASS WEIGHT
-    callbacks=[early_stop, checkpoint]
+    class_weight=class_weight,
+    callbacks=[early_stop, checkpoint, reduce_lr]
 )
 save_history_to_csv(history, stage="baseline")
 
