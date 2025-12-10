@@ -136,3 +136,18 @@ portanto essa alteração não foi benéfica e será revertida na próxima vers�
 ### Compare
 `Baseline  - acc teste: 0.6392`
 `Fine-tune - acc teste: 0.747`
+
+### Versão 1.0
+
+Nessa versão foi revertido o número de épocas para 40 e o batch size para 16.
+Além disso, foi alterado o modelo base para EfficientNetB2.
+
+Notou-se um aumento significativo no tempo de treinamento e apenas uma pequena melhora
+no val_acc do fine-tune.
+
+Portanto é provável que a base de treinamento ou validação não esteja bem trabalhada
+e para que vejamos melhorias significativas, será necessário trabalhar melhor os dados.
+
+### Compare
+`Baseline  - acc teste: 0.6805`
+`Fine-tune - acc teste: 0.7793`
