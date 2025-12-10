@@ -121,3 +121,18 @@ Isso fez com que o tempo de processamento aumentasse em 4x, mas o modelo obteve 
 ### Compare
 `Baseline  - acc teste: 0.6328`
 `Fine-tune - acc teste: 0.7687`
+
+## Versão 0.9
+
+Como na versão 0.8 o modelo obteve uma melhora significativa, nessa versão foi decidido aumentar o número de épocas para 60.
+Foi diminuido o tamanho da batch de 16 para 12.
+
+Além disso, ao ler a documentação do ReduceLROnPlateau, percebi que o min_lr não funcionava da maneira que imaginei,
+portanto o reduzi de 1e-3 para 5e-4.
+
+Nota-se que o 0.9, comparado ao 0.8, não obteve uma melhora significativa para justificar o aumento do tempo de treinamento,
+portanto essa alteração não foi benéfica e será revertida na próxima versão.
+
+### Compare
+`Baseline  - acc teste: 0.6392`
+`Fine-tune - acc teste: 0.747`

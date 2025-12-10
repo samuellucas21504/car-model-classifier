@@ -15,8 +15,8 @@ test_dir  = "dataset/test"
 
 # Parâmetros
 IMG_HEIGHT, IMG_WIDTH = 240, 240
-EPOCHS = 40
-BATCH_SIZE = 16
+EPOCHS = 60
+BATCH_SIZE = 12
 
 # Gerador de dados de treinamento com augmentação e separação de validação
 train_datagen = ImageDataGenerator(
@@ -138,7 +138,7 @@ reduce_lr = ReduceLROnPlateau(
     monitor="val_loss",
     factor=0.3,
     patience=2,
-    min_lr=1e-5,
+    min_lr=3e-6,
 )
 
 checkpoint_ft = ModelCheckpoint(
