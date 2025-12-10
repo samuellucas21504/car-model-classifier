@@ -140,7 +140,7 @@ portanto essa alteração não foi benéfica e será revertida na próxima vers�
 ### Versão 1.0
 
 Nessa versão foi revertido o número de épocas para 40 e o batch size para 16.
-Além disso, foi alterado o modelo base para EfficientNetB2.
+Além disso, foi alterado o modelo base para EfficientNetB4.
 
 Notou-se um aumento significativo no tempo de treinamento e apenas uma pequena melhora
 no val_acc do fine-tune.
